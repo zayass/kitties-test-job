@@ -9,6 +9,7 @@
 
 namespace Application;
 
+use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -20,6 +21,8 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $this->initUserFormsListener($eventManager);
     }
 
     public function getConfig()
@@ -36,5 +39,19 @@ class Module
                 ),
             ),
         );
+    }
+
+    private function initUserFormsListener(EventManagerInterface $eventManager) {
+        $events = $eventManager->getSharedManager();
+
+        // This function remove email field from register form and formvalidator
+        $emailRemover = function($event) {
+            $target = $event->getTarget();
+
+            $target->remove('email');
+        };
+
+        $events->attach('ZfcUser\Form\Register','init', $emailRemover);
+        $events->attach('ZfcUser\Form\RegisterFilter','init', $emailRemover);
     }
 }
