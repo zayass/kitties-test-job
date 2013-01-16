@@ -10,12 +10,21 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
-{
-    public function indexAction()
-    {
-        return new ViewModel();
+class IndexController extends AbstractActionController {
+
+    public function indexAction() {
+        return array(
+            'kitty_url' => $this->getRandomKitty()
+        );
     }
+
+
+    private function getRandomKitty() {
+        $width  = rand(1200, 1500);
+        $height = rand(500, 700);
+
+        return "http://placekitten.com/g/$width/$height";
+    }
+
 }
