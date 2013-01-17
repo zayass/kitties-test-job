@@ -20,6 +20,29 @@ return array(
                     ),
                 ),
             ),
+
+            'kitties' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/kitties',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'kitties'
+                    )
+                )
+            ),
+
+            'mykitties' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/my-kitties',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'kitties'
+                    )
+                )
+            ),
+
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them

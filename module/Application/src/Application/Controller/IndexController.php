@@ -14,6 +14,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 class IndexController extends AbstractActionController {
 
     public function indexAction() {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            $this->redirect()->toRoute('kitties');
+        }
+
         $this->appendScript('js/jquery.simplemodal-1.4.3.js');
         $this->appendScript('js/main-page.js');
 
@@ -37,5 +41,31 @@ class IndexController extends AbstractActionController {
 
     private function appendScript($path) {
         $this->getRenderer()->headScript()->appendFile($path);
+    }
+
+    public function kittiesAction() {
+        $this->appendScript('js/jquery.masonry.min.js');
+        $this->appendScript('js/kitties.js');
+
+        $kitties = array();
+
+        for ($i = 0; $i < 12; $i++) {
+            $width = 250;
+            $height = rand(200, 500);
+
+            $kitties[] = array(
+                'url' => "http://placekitten.com/$width/$height",
+                'width' => $width,
+                'height' => $height
+            );
+        }
+
+        return array(
+            'kitties' => $kitties
+        );
+    }
+
+    public function myKittiesAction() {
+        return array();
     }
 }

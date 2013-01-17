@@ -51,3 +51,35 @@ div.container a.brand {
 #modal-login {
     display: none;
 }
+
+#columns {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.pin {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: 0 0 8px black;
+    text-align: right;
+
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.pin > a {
+    margin-top: 9px;
+}
+
+.pin > img {
+    display: block;
+}
+
+.btn.top {
+    margin-bottom: 20px;
+}
+
+.btn.bottom {
+    margin-top: 20px;
+}
