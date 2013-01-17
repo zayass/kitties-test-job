@@ -1,1 +1,5 @@
 <img src="<?php echo $this->kitty_url ?>">
+<div id="modal-login">
+<?php echo $this->zfcUserLoginWidget(); ?>
+Not registered? <a href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect='.$this->redirect : '') ?>">Sign up!</a>
+</div>

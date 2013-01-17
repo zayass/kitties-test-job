@@ -14,6 +14,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 class IndexController extends AbstractActionController {
 
     public function indexAction() {
+        $this->appendScript('js/jquery.simplemodal-1.4.3.js');
+        $this->appendScript('js/main-page.js');
+
         return array(
             'kitty_url' => $this->getRandomKitty()
         );
@@ -27,4 +30,12 @@ class IndexController extends AbstractActionController {
         return "http://placekitten.com/g/$width/$height";
     }
 
+    private function getRenderer() {
+        return $this->getServiceLocator()
+                    ->get('Zend\View\Renderer\RendererInterface');
+    }
+
+    private function appendScript($path) {
+        $this->getRenderer()->headScript()->appendFile($path);
+    }
 }
