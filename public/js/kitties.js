@@ -53,7 +53,7 @@ $(document).ready(function() {
              } else {
                  $this.removeClass('btn-success').addClass('btn-danger');
              }
-        }, function () {
+        }).error(function () {
             $this.removeClass('btn-success').addClass('btn-danger');
         });
     })
