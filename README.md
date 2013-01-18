@@ -19,10 +19,12 @@ Installation
 * Clone from git.
 * This project used embed composer. Run php composer.phar update at root project directory
 * Enjoy
+
+------------
     git clone git://github.com/zayass/kitties-test-job.git
     cd kitties-test-job
     php composer.phar update
-    cd kitties-test-job
+    cd public
     php -S localhost:8000
 
 Virtual Host
