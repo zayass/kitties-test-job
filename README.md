@@ -1,4 +1,4 @@
-Kitty, itty, kitty!!
+Kitty, kitty, kitty!!!
 =======================
 
 Introduction
