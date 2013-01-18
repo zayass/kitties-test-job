@@ -39,4 +39,22 @@ $(document).ready(function() {
 
         $columns.append($pins).masonry( 'appended', $pins);
     })
+
+
+    $('.like-kitty').click(function() {
+        var $this = $(this);
+
+        $.post('/kitties', {
+            width: $this.data('width'),
+            height: $this.data('height')
+        }, function(result) {
+             if (result.success) {
+                 $this.removeClass('btn-danger').addClass('btn-success');
+             } else {
+                 $this.removeClass('btn-success').addClass('btn-danger');
+             }
+        }, function () {
+            $this.removeClass('btn-success').addClass('btn-danger');
+        });
+    })
 })

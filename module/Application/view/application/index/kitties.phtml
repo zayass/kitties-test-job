@@ -1,10 +1,13 @@
 <a href="javascript:void(0);" class="load-kitties top btn btn-primary btn-large">Load more kitties</a>
 
 <div id="columns">
-    <?php foreach($this->kitties as $kitty): ?>
+    <?php foreach($kitties as $kitty): ?>
         <div class="pin">
            <img style='<?php echo "width: {$kitty->getWidth()}px; height: {$kitty->getHeight()}px" ?>' src="<?php echo $kitty->getUrl() ?>">
-           <a href="#" class="btn btn-success">Like it</a>
+           <a href="javascript:void(0);"
+              data-width="<?php echo $kitty->getWidth()?>"
+              data-height="<?php echo $kitty->getHeight()?>"
+              class="like-kitty btn">Like it</a>
         </div>
     <?php endforeach ?>
 </div>

@@ -9,7 +9,10 @@
 
 namespace Application\Controller;
 
+use Application\Model\KittyService;
+use Exception;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 
 class IndexController extends AbstractActionController {
 
@@ -21,10 +24,8 @@ class IndexController extends AbstractActionController {
         $this->appendScript('js/jquery.simplemodal-1.4.3.js');
         $this->appendScript('js/main-page.js');
 
-        $kittyService = $this->getServiceLocator()->get('Application\Model\KittyService');
-
         return array(
-            'kitty' => $kittyService->getBigRandom()
+            'kitty' => $this->getKittyService()->getBigRandom()
         );
     }
 
@@ -38,30 +39,67 @@ class IndexController extends AbstractActionController {
     }
 
     public function kittiesAction() {
+        if ($this->getRequest()->isPost()) {
+            $res = $this->addKitty();
+
+            if ($this->getRequest()->isXmlHttpRequest()) {
+                return new JsonModel($res);
+            }
+        }
+
         $this->appendScript('js/jquery.masonry.min.js');
         $this->appendScript('js/kitties.js');
 
-        $kittyService = $this->getServiceLocator()->get('Application\Model\KittyService');
-
         return array(
-            'kitties' => $kittyService->getRandomSet()
+            'kitties' => $this->getKittyService()->getRandomSet()
         );
     }
 
     public function myKittiesAction() {
-        $kittyService = $this->getServiceLocator()->get('Application\Model\KittyService');
-        $kittiesTable = $this->getServiceLocator()->get('Application\Model\KittyTable');
+        $this->appendScript('js/jquery.masonry.min.js');
+        $this->appendScript('js/kitties.js');
 
-        $kitty = $kittyService->createForUser();
-
-        $kitty->setWidth(100)
-              ->setHeight(100);
-
-
-        $kittiesTable->save($kitty);
 
         return array(
-            'kitties' => $kittiesTable->fetchAll()
+            'kitties' => $this->getKittyService()->getUserKitties()
         );
+    }
+
+    private function addKitty() {
+        $width  = $this->params()->fromPost('width', null);
+        $height = $this->params()->fromPost('height', null);
+
+        $res = array(
+            'success' => false
+        );
+
+        if (is_null($width) || is_null($height)) {
+            return $res;
+        }
+
+        $kittiesTable = $this->getServiceLocator()->get('Application\Model\KittyTable');
+
+        try {
+            $kitty = $this->getKittyService()->createForUser();
+
+            $kitty->setWidth($width)
+                  ->setHeight($height);
+
+            $id = $kittiesTable->save($kitty);
+        } catch (\Exception $exc) {
+            return $res;
+        }
+
+        return array(
+            'id' => $id,
+            'success' => true
+        );
+    }
+
+    /**
+     * @return KittyService
+     */
+    private function getKittyService() {
+        return $this->getServiceLocator()->get('Application\Model\KittyService');
     }
 }

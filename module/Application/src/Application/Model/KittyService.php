@@ -18,8 +18,8 @@ class KittyService {
             throw new LogicException("User must be logged in");
         }
 
-        $kitty = new Kitty();
         $user = $this->auth_service->getIdentity();
+        $kitty = new Kitty();
 
         $kitty->setUserId($user->getId());
 
@@ -39,6 +39,8 @@ class KittyService {
     }
 
     public function getRandomSet() {
+        $kitties = array();
+
         for ($i = 0; $i < 12; $i++) {
             $width = 250;
             $height = rand(200, 500);
@@ -47,5 +49,24 @@ class KittyService {
         }
 
         return $kitties;
+    }
+
+    public function getUserKitties() {
+        if (!$this->auth_service->hasIdentity()) {
+            throw new LogicException("User must be logged in");
+        }
+
+        $user = $this->auth_service->getIdentity();
+        return $this->table->fetchForUser($user);
+    }
+
+    public function delete($id) {
+        if (!$this->auth_service->hasIdentity()) {
+            throw new LogicException("User must be logged in");
+        }
+
+        $user = $this->auth_service->getIdentity();
+
+        return $this->table->deleteUserKitty($user, $id);
     }
 }

@@ -1,1 +1,12 @@
-hui
+<?php if(!count($kitties)): ?>
+    <h2>You have no kitties yet :(</h2>
+<?php endif ?>
+
+<div id="columns">
+
+    <?php foreach($kitties as $kitty): ?>
+        <div class="pin">
+            <img style='<?php echo "width: {$kitty->getWidth()}px; height: {$kitty->getHeight()}px" ?>' src="<?php echo $kitty->getUrl() ?>">
+        </div>
+    <?php endforeach ?>
+</div>
