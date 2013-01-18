@@ -21,17 +21,11 @@ class IndexController extends AbstractActionController {
         $this->appendScript('js/jquery.simplemodal-1.4.3.js');
         $this->appendScript('js/main-page.js');
 
+        $kittyService = $this->getServiceLocator()->get('Application\Model\KittyService');
+
         return array(
-            'kitty_url' => $this->getRandomKitty()
+            'kitty' => $kittyService->getBigRandom()
         );
-    }
-
-
-    private function getRandomKitty() {
-        $width  = rand(1200, 1500);
-        $height = rand(500, 700);
-
-        return "http://placekitten.com/g/$width/$height";
     }
 
     private function getRenderer() {
@@ -47,25 +41,27 @@ class IndexController extends AbstractActionController {
         $this->appendScript('js/jquery.masonry.min.js');
         $this->appendScript('js/kitties.js');
 
-        $kitties = array();
-
-        for ($i = 0; $i < 12; $i++) {
-            $width = 250;
-            $height = rand(200, 500);
-
-            $kitties[] = array(
-                'url' => "http://placekitten.com/$width/$height",
-                'width' => $width,
-                'height' => $height
-            );
-        }
+        $kittyService = $this->getServiceLocator()->get('Application\Model\KittyService');
 
         return array(
-            'kitties' => $kitties
+            'kitties' => $kittyService->getRandomSet()
         );
     }
 
     public function myKittiesAction() {
-        return array();
+        $kittyService = $this->getServiceLocator()->get('Application\Model\KittyService');
+        $kittiesTable = $this->getServiceLocator()->get('Application\Model\KittyTable');
+
+        $kitty = $kittyService->createForUser();
+
+        $kitty->setWidth(100)
+              ->setHeight(100);
+
+
+        $kittiesTable->save($kitty);
+
+        return array(
+            'kitties' => $kittiesTable->fetchAll()
+        );
     }
 }

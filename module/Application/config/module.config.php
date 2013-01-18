@@ -38,7 +38,7 @@ return array(
                     'route' => '/my-kitties',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
-                        'action'     => 'kitties'
+                        'action'     => 'myKitties'
                     )
                 )
             ),

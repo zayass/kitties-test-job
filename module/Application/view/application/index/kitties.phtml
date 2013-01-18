@@ -1,20 +1,12 @@
-<style>
-
-</style>
-
-<a href="#" class="load-kitties top btn btn-primary btn-large">Load more kitties</a>
+<a href="javascript:void(0);" class="load-kitties top btn btn-primary btn-large">Load more kitties</a>
 
 <div id="columns">
-        <?php foreach($this->kitties as $kitty): ?>
-            <div class="pin">
-               <img style='<?php echo "width: {$kitty['width']}px; height: {$kitty['height']}px" ?>' src="<?php echo $kitty['url'] ?>">
-               <a href="#" class="btn btn-success">Like it</a>
-            </div>
-        <?php endforeach ?>
+    <?php foreach($this->kitties as $kitty): ?>
+        <div class="pin">
+           <img style='<?php echo "width: {$kitty->getWidth()}px; height: {$kitty->getHeight()}px" ?>' src="<?php echo $kitty->getUrl() ?>">
+           <a href="#" class="btn btn-success">Like it</a>
+        </div>
+    <?php endforeach ?>
 </div>
 
-<a href="#" class="load-kitties bottom btn btn-primary btn-large">Load more kitties</a>
-
-<script>
-
-</script>
+<a href="javascript:void(0)" class="load-kitties bottom btn btn-primary btn-large">Load more kitties</a>
