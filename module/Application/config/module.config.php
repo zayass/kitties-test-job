@@ -32,6 +32,17 @@ return array(
                 )
             ),
 
+            'ajaxLogin' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/user/ajax-login',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\User',
+                        'action'     => 'ajaxLogin'
+                    )
+                )
+            ),
+
             'mykitties' => array(
                 'type' => 'Literal',
                 'options' => array(
@@ -92,7 +103,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\User' => 'Application\Controller\UserController',
         ),
     ),
     'view_manager' => array(
