@@ -30,12 +30,7 @@ class KittyService {
         $width  = rand(1200, 1500);
         $height = rand(500, 700);
 
-        $kitty = new Kitty();
-
-        $kitty->setWidth($width)
-              ->setHeight($height);
-
-        return $kitty;
+        return new Kitty($widht, $height);
     }
 
     public function getRandomSet() {
